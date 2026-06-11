@@ -1,0 +1,20 @@
+server {
+    listen 80;
+    listen [::]:80;
+    server_name tensoriumlabs.com www.tensoriumlabs.com;
+
+    root /var/www/tensoriumlabs;
+    index index.html;
+
+    access_log /var/log/nginx/tensoriumlabs.access.log;
+    error_log /var/log/nginx/tensoriumlabs.error.log;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location = /health {
+        add_header Content-Type text/plain;
+        return 200 "ok\n";
+    }
+}

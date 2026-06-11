@@ -1,0 +1,19 @@
+<svg width="1600" height="220" viewBox="0 0 1600 220" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .title { fill: #F1EDE4; font-family: Arial, Helvetica, sans-serif; font-size: 72px; letter-spacing: 10px; font-weight: 500; }
+      .labs { fill: #4C88FF; font-family: Arial, Helvetica, sans-serif; font-size: 34px; letter-spacing: 12px; font-weight: 500; }
+    </style>
+  </defs>
+  <rect width="1600" height="220" fill="none"/>
+  <circle cx="92" cy="110" r="68" fill="#070B16" stroke="#F1EDE4" stroke-width="8"/>
+  <rect x="82" y="62" width="5" height="16" rx="2" fill="#F1EDE4"/>
+  <rect x="96" y="62" width="5" height="16" rx="2" fill="#F1EDE4"/>
+  <path fill="#F1EDE4" d="M 42 84 L 142 84 L 136 95 L 102 95 L 102 170 L 94 177 L 90 177 L 82 170 L 82 95 L 48 95 Z"/>
+  <path fill="#070B16" d="M 54 98 L 130 98 L 124 106 L 98 106 L 98 167 L 92 172 L 86 167 L 86 106 L 60 106 Z"/>
+  <path fill="#F1EDE4" d="M 86 106 L 98 106 L 98 165 L 92 170 L 86 165 Z"/>
+  <path d="M 48 144 C 42 128, 42 110, 45 94" stroke="#4C88FF" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <path d="M 136 144 C 142 128, 142 110, 139 94" stroke="#4C88FF" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <text x="190" y="102" class="title">TENSORIUM</text>
+  <text x="192" y="152" class="labs">LABS</text>
+</svg>

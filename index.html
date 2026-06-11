@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tensorium - Mainnet v1 GPU-First Proof of Work</title>
+  <meta name="description" content="Tensorium is a live GPU-first Proof-of-Work Layer 1 blockchain secured by TensorHash v1 with zero premine, transparent tokenomics, and self-custody.">
+  <link rel="icon" href="/assets/tensorium-mark.svg" type="image/svg+xml">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+    :root {
+      color-scheme: dark;
+      --bg:        #05070D;
+      --surface:   #0a0e18;
+      --surface2:  #11161f;
+      --border:    rgba(255,255,255,.08);
+      --border2:   rgba(76,136,255,.22);
+      --primary:   #4C88FF;
+      --primary-l: #6EA0FF;
+      --green:     #39d98a;
+      --yellow:    #d29922;
+      --text:      #F1EDE4;
+      --muted:     #b3bfd8;
+      --muted2:    #6b7390;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: 'IBM Plex Mono', ui-monospace, monospace;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(76, 136, 255, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(76, 136, 255, 0.08) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 78%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 24px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 700;
+      letter-spacing: 0;
+      font-size: 20px;
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      display: block;
+      object-fit: contain;
+      filter: drop-shadow(0 0 18px rgba(76, 136, 255, 0.45));
+    }
+
+    .navlinks {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .navlinks a, .button {
+      min-height: 40px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+      font-weight: 650;
+    }
+
+    .navlinks a:hover, .button:hover {
+      border-color: var(--border2);
+    }
+
+    .button.primary {
+      color: #05070D;
+      border: 0;
+      background: linear-gradient(135deg, var(--primary), var(--primary-l));
+      box-shadow: 0 16px 42px rgba(76, 136, 255, 0.28);
+      font-weight: 800;
+    }
+
+    .hero {
+      min-height: calc(100vh - 108px);
+      display: grid;
+      align-items: center;
+      padding: 40px 0 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border2);
+      background: rgba(76, 136, 255, 0.08);
+      color: var(--primary-l);
+      font-size: 13px;
+      font-weight: 760;
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 7px rgba(57, 217, 138, 0.14), 0 0 26px rgba(57, 217, 138, 0.8);
+    }
+
+    h1 {
+      margin: 22px 0 18px;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: clamp(46px, 7vw, 92px);
+      line-height: 0.92;
+      letter-spacing: 0;
+      max-width: 880px;
+      color: var(--text);
+    }
+
+    .lead {
+      max-width: 660px;
+      color: var(--muted);
+      font-size: clamp(18px, 2.1vw, 22px);
+      line-height: 1.58;
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 34px;
+      max-width: 720px;
+    }
+
+    .stat, .panel, .tile {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .stat {
+      min-height: 100px;
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .label {
+      color: var(--muted2);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .value {
+      margin-top: 8px;
+      font-size: 22px;
+      font-weight: 850;
+      color: var(--text);
+    }
+
+    .panel {
+      border-radius: 8px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(76,136,255,0.18), transparent 40%, rgba(57,217,138,0.10)),
+        linear-gradient(180deg, rgba(255,255,255,0.03), transparent 40%);
+      opacity: 0.9;
+    }
+
+    .panel > * { position: relative; }
+
+    .chain {
+      display: grid;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .node {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: center;
+      min-height: 70px;
+      padding: 12px;
+      border-radius: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+
+    .node-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      color: #05070D;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--primary), var(--primary-l));
+      box-shadow: 0 0 28px rgba(76, 136, 255, 0.35);
+    }
+
+    .node strong { display: block; color: var(--text); }
+    .node span { color: var(--muted); font-size: 14px; }
+
+    section {
+      padding: 64px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: clamp(30px, 4vw, 48px);
+      letter-spacing: 0;
+      color: var(--text);
+    }
+
+    .section-title p {
+      max-width: 520px;
+      color: var(--muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .tiles {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .tile {
+      min-height: 210px;
+      border-radius: 8px;
+      padding: 22px;
+    }
+
+    .tile h3 {
+      margin: 14px 0 10px;
+      font-size: 21px;
+      color: var(--text);
+    }
+
+    .tile p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .glyph {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(76, 136, 255, 0.10);
+      border: 1px solid var(--border2);
+      color: var(--primary-l);
+      font-weight: 900;
+    }
+
+    .terminal {
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted2);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 18px rgba(57,217,138,0.56);
+    }
+
+    pre {
+      margin: 0;
+      padding: 20px;
+      overflow: auto;
+      color: var(--text);
+      font: 15px/1.65 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    /* GPU rental cards */
+    .rentals {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .rental-card {
+      border-radius: 8px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rental-card h3 {
+      margin: 0;
+      font-size: 22px;
+      font-family: "Chakra Petch", sans-serif;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .badge {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--green);
+      border: 1px solid rgba(57,217,138,0.35);
+      background: rgba(57,217,138,0.08);
+      border-radius: 999px;
+      padding: 4px 10px;
+      white-space: nowrap;
+    }
+
+    .rental-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .rental-card .actions {
+      margin-top: 6px;
+    }
+
+    footer {
+      padding: 42px 0 54px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid, .tiles, .rentals {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        min-height: auto;
+        padding-top: 24px;
+      }
+      .panel {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 28px, 1160px);
+      }
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .navlinks {
+        justify-content: flex-start;
+      }
+      .stats {
+        grid-template-columns: 1fr;
+      }
+      .section-title {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .button, .navlinks a {
+        width: 100%;
+      }
+      .actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell nav">
+    <a class="brand" href="/" aria-label="Tensorium home">
+      <img class="mark" src="/assets/tensorium-mark.svg" alt="">
+      <span>Tensorium</span>
+    </a>
+    <nav class="navlinks" aria-label="Primary navigation">
+      <a href="https://explorer.tensoriumlabs.com">Explorer</a>
+      <a href="https://marketplace.tensoriumlabs.com">Marketplace</a>
+      <a href="https://docs.tensoriumlabs.com">Docs</a>
+      <a href="https://pooltxm.tensoriumlabs.com">Pool</a>
+      <a href="https://whitepaper.tensoriumlabs.com">Whitepaper</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <span class="eyebrow"><span class="pulse"></span> Mainnet v1 live · TensorHash v1</span>
+          <h1>Tensorium</h1>
+          <p class="lead">A live Proof-of-Work Layer 1 built for open mining, transparent supply, and GPU-first security. Tensorium mainnet runs on TensorHash v1 with zero premine and a 33,000,000 TXM mining-only cap.</p>
+          <div class="actions">
+            <a class="button primary" href="https://docs.tensoriumlabs.com">Start mining</a>
+            <a class="button" href="https://pooltxm.tensoriumlabs.com">Pool stats</a>
+            <a class="button" href="https://explorer.tensoriumlabs.com">View explorer</a>
+            <a class="button" href="https://github.com/tensorium-labs/tensorium-core">GitHub</a>
+          </div>
+          <div class="stats" aria-label="Network parameters">
+            <div class="stat">
+              <div class="label">Ticker</div>
+              <div class="value">TXM</div>
+            </div>
+            <div class="stat">
+              <div class="label">Block time</div>
+              <div class="value">60 sec</div>
+            </div>
+            <div class="stat">
+              <div class="label">Max supply</div>
+              <div class="value">33M</div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="panel" aria-label="Live network summary">
+          <div class="label">Network stack</div>
+          <h2>Mainnet v1, public surfaces live.</h2>
+          <div class="chain">
+            <div class="node">
+              <div class="node-icon">01</div>
+              <div><strong>TensorHash v1</strong><span>Memory-hard GPU-first mining with live CUDA miner support.</span></div>
+            </div>
+            <div class="node">
+              <div class="node-icon">02</div>
+              <div><strong>Self-custody wallet</strong><span>CLI wallet plus refreshed browser extension for TXM holders.</span></div>
+            </div>
+            <div class="node">
+              <div class="node-icon">03</div>
+              <div><strong>Public RPC + P2P</strong><span>Node, miner, pool, explorer, marketplace, docs, and whitepaper online.</span></div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell">
+        <div class="section-title">
+          <h2>Built for verifiable mining</h2>
+          <p>Tensorium mainnet v1 ships the full public stack first: node, wallet, miner, pool, explorer, marketplace, docs, and whitepaper aligned around the live chain.</p>
+        </div>
+        <div class="tiles">
+          <article class="tile">
+            <div class="glyph">PoW</div>
+            <h3>TensorHash v1 mining</h3>
+            <p>Mainnet uses TensorHash v1, a memory-hard, GPU-first proof of work designed around real VRAM-bound compute for fair, ASIC-resistant mining.</p>
+          </article>
+          <article class="tile">
+            <div class="glyph">L1</div>
+            <h3>Standalone chain</h3>
+            <p>Tensorium has its own UTXO ledger, mempool, wallet, P2P protocol, fork choice, and RPC instead of depending on another chain.</p>
+          </article>
+          <article class="tile">
+            <div class="glyph">TXM</div>
+            <h3>Transparent emission</h3>
+            <p>33,000,000 TXM max supply, zero premine, zero founder allocation, and a mining-only emission schedule across 10 eras.</p>
+          </article>
+          <article class="tile">
+            <div class="glyph">5%</div>
+            <h3>Transparent pool</h3>
+            <p>The official pool at pooltxm.tensoriumlabs.com shows stats, miner lookup, payout history, and the published 5% fee.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell">
+        <div class="section-title">
+          <h2>Run mainnet v1</h2>
+          <p>Install binaries, create a wallet, sync from the public seed, then mine TXM either solo or through the official pool.</p>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar"><span class="dot"></span> Linux quick install</div>
+          <pre><code>curl -fsSL https://raw.githubusercontent.com/tensorium-labs/tensorium-core/main/install.sh | bash
+
+tensorium-node sync seed.tensoriumlabs.com:33333
+txmwallet create
+tensorium-miner --mode pool --pool stratum+tcp://pooltxm.tensoriumlabs.com:3333 --wallet YOUR_TXM_ADDRESS --worker rig1</code></pre>
+        </div>
+        <div class="actions" style="margin-top:16px">
+          <a class="button" href="https://pooltxm.tensoriumlabs.com">Open pool</a>
+          <a class="button" href="https://github.com/tensorium-labs/tensorium-core/blob/main/docs/project/RISK_DISCLOSURE.md">Risk disclosure</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="rent-gpu">
+      <div class="shell">
+        <div class="section-title">
+          <h2>No GPU? Rent one and start mining</h2>
+          <p>Don't have a rig at home? Spin up an on-demand GPU instance from a cloud provider and start mining TXM in minutes. Both providers below offer sign-up bonuses.</p>
+        </div>
+        <div class="rentals">
+          <article class="rental-card">
+            <h3>RunPod <span class="badge">$5–$50 bonus</span></h3>
+            <p>On-demand NVIDIA GPUs (RTX 4090, 5090, A100, H100) billed per second. Great for short mining sessions and quick benchmarking of TensorHash v1.</p>
+            <div class="actions">
+              <a class="button primary" href="https://runpod.io?ref=9t28dt39" target="_blank" rel="noopener">Get RunPod credit →</a>
+            </div>
+          </article>
+          <article class="rental-card">
+            <h3>Vast.ai <span class="badge">Lowest $/hr</span></h3>
+            <p>Marketplace of community + datacenter GPUs, often the cheapest hourly rates available for high-end consumer cards like the RTX 4090.</p>
+            <div class="actions">
+              <a class="button primary" href="https://cloud.vast.ai/?ref_id=207905" target="_blank" rel="noopener">Open Vast.ai →</a>
+            </div>
+          </article>
+        </div>
+
+        <div class="terminal" style="margin-top:18px">
+          <div class="terminal-bar"><span class="dot"></span> Quick install on a rented GPU instance (Ubuntu, NVIDIA driver + CUDA preinstalled)</div>
+          <pre><code># 1. SSH into your rented instance, then:
+curl -fsSL https://raw.githubusercontent.com/tensorium-labs/tensorium-core/main/install.sh | bash
+
+# 2. Create a wallet (save your seed phrase!)
+txmwallet create
+
+# 3. Start mining to the official pool
+tensorium-miner --mode pool --pool stratum+tcp://pooltxm.tensoriumlabs.com:3333 --wallet YOUR_TXM_ADDRESS --worker rented-gpu --gpu all
+
+# ...or mine solo against the public RPC
+tensorium-miner --mode solo --rpc https://rpc.tensoriumlabs.com --wallet YOUR_TXM_ADDRESS --gpu all</code></pre>
+        </div>
+        <p style="color:var(--muted2); font-size:13px; margin-top:14px;">
+          Renting GPUs for mining is at your own risk and may not be profitable depending on instance pricing, electricity costs baked into rental fees, and network difficulty. Always check current pool stats before committing to longer rentals.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      Tensorium mainnet v1 is live on TensorHash v1 with zero premine, public docs, public explorer, and the reference pool online.
+      <br><a href="https://pooltxm.tensoriumlabs.com">Pool</a> · <a href="https://marketplace.tensoriumlabs.com">Marketplace</a> · <a href="https://docs.tensoriumlabs.com">Docs</a> · <a href="https://whitepaper.tensoriumlabs.com">Whitepaper</a> · <a href="https://github.com/tensorium-labs/tensorium-core/blob/main/docs/project/RISK_DISCLOSURE.md">Risk Disclosure</a>
+    </div>
+  </footer>
+</body>
+</html>

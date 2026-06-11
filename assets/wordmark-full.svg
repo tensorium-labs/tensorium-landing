@@ -1,0 +1,56 @@
+<svg width="2200" height="520" viewBox="0 0 2200 520" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .bg { fill: #05070D; }
+      .line { stroke: #4C88FF; stroke-width: 4; }
+      .title { fill: #F1EDE4; font-family: Arial, Helvetica, sans-serif; font-size: 110px; letter-spacing: 18px; font-weight: 500; }
+      .labs { fill: #4C88FF; font-family: Arial, Helvetica, sans-serif; font-size: 62px; letter-spacing: 18px; font-weight: 500; }
+      .small { fill: #4C88FF; font-family: Arial, Helvetica, sans-serif; font-size: 26px; letter-spacing: 10px; font-weight: 500; }
+    </style>
+  </defs>
+
+  <rect width="2200" height="520" rx="48" class="bg"/>
+
+  <!-- icon -->
+  <circle cx="210" cy="260" r="126" fill="#070B16" stroke="#F1EDE4" stroke-width="10"/>
+  <rect x="192" y="170" width="10" height="24" rx="2" fill="#F1EDE4"/>
+  <rect x="218" y="170" width="10" height="24" rx="2" fill="#F1EDE4"/>
+
+  <path fill="#F1EDE4" d="
+    M 118 210
+    L 302 210
+    L 292 228
+    L 228 228
+    L 228 370
+    L 212 384
+    L 208 384
+    L 192 370
+    L 192 228
+    L 128 228
+    Z
+  "/>
+  <path fill="#070B16" d="
+    M 138 234
+    L 282 234
+    L 272 246
+    L 218 246
+    L 218 366
+    L 210 374
+    L 202 366
+    L 202 246
+    L 148 246
+    Z
+  "/>
+  <path fill="#F1EDE4" d="M 202 246 L 218 246 L 218 362 L 210 370 L 202 362 Z"/>
+  <path d="M 130 322 C 118 294, 116 266, 120 236" stroke="#4C88FF" stroke-width="4" stroke-linecap="round" fill="none"/>
+  <path d="M 290 322 C 302 294, 304 266, 300 236" stroke="#4C88FF" stroke-width="4" stroke-linecap="round" fill="none"/>
+
+  <line x1="348" y1="170" x2="348" y2="350" class="line"/>
+
+  <text x="430" y="245" class="title">TENSORIUM</text>
+  <line x1="520" y1="320" x2="610" y2="320" class="line"/>
+  <text x="660" y="342" class="labs">LABS</text>
+  <line x1="940" y1="320" x2="1030" y2="320" class="line"/>
+
+  <text x="430" y="410" class="small">GPU-FIRST PROOF-OF-WORK NETWORK</text>
+</svg>
